@@ -7,13 +7,29 @@ public class Frame {
     protected boolean strike;
     protected boolean spare;
     protected int frameScore;
+    private boolean frameScoreCalculated;
 
     public Frame(int frame) {
         this.frame = frame;
+        this.strike = false;
+        this.spare = false;
+        this.frameScoreCalculated = false;
     }
 
     public int getFrame() {
         return this.frame;
+    }
+
+    public boolean isStrike() {
+        return strike;
+    }
+
+    public boolean isSpare() {
+        return spare;
+    }
+
+    public boolean isFrameScoreCalculated() {
+        return frameScoreCalculated;
     }
 
     public boolean setFrameShots(String firstShot, String secondShot) {
@@ -52,6 +68,7 @@ public class Frame {
 
     private void setOpenFrameScore() {
         this.frameScore = Integer.parseInt(firstShot) + Integer.parseInt(secondShot);
+        this.frameScoreCalculated = true;
     }
 
     public boolean setStrikeFrameScore(String firstShot, String secondShot) {
@@ -64,14 +81,17 @@ public class Frame {
                 // TODO: Make sure secondShot is an integer
                 this.frameScore = 20 + Integer.parseInt(secondShot);
             }
+            this.frameScoreCalculated = true;
             return true;
         }
         isValidShotCombination(firstShot, secondShot);
         if (secondShot == "/") {
             this.frameScore = 20;
+            this.frameScoreCalculated = true;
             return true;
         }
         this.frameScore = 10 + Integer.parseInt(firstShot) + Integer.parseInt(secondShot);
+        this.frameScoreCalculated = true;
         return true;
     }
 
@@ -85,6 +105,7 @@ public class Frame {
         } else {
             this.frameScore = 10 + Integer.parseInt(firstShot);
         }
+        this.frameScoreCalculated = true;
         return true;
     }
 
@@ -92,20 +113,20 @@ public class Frame {
         return frameScore;
     }
 
-    public String toString() {
-        String first = getFirstShot() == null ? " " : getFirstShot();
-        String second = getSecondShot() == null ? " " : getSecondShot();
-        String total = getFrameScore() == 0 ? " " : Integer.toString(getFrameScore());
-        return String.format("----%d----", getFrame()) +
-               "---------" +
-               String.format("| %d | %d |", first, second) +
-               String.format("|   %d   |", total) +
-               "---------";
-    }
+//    public String toString() {
+//        String first = getFirstShot() == null ? " " : getFirstShot();
+//        String second = getSecondShot() == null ? " " : getSecondShot();
+//        String total = isFrameScoreCalculated() == false ? " " : Integer.toString(getFrameScore());
+//        return String.format("----%d----", getFrame()) +
+//               "---------" +
+//               String.format("| %d | %d |", first, second) +
+//               String.format("|   %d   |", total) +
+//               "---------";
+//    }
 
     protected boolean isValidShot(String shot) throws Exception {
         if (shot == null) {
-            throw new Exception("Shot can't be null");
+            return true;
         }
         String[] validStrings = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "/", "X"};
         if (!Arrays.asList(validStrings).contains(shot)) {
@@ -116,6 +137,14 @@ public class Frame {
     }
 
     protected boolean isValidShotCombination(String firstShot, String secondShot) throws IllegalArgumentException, IllegalStateException {
+        if (firstShot == null) {
+            throw new IllegalArgumentException("First shot can't be null.");
+        }
+
+        if (firstShot != "X" && secondShot == null) {
+            throw new IllegalArgumentException("Second shot must be defined unless first shot is 'X'.");
+        }
+
         // Check valid strike and spare combinations
         if (firstShot == "X" && secondShot != null) {
             throw new IllegalArgumentException("Second shot must be null when first is 'X'.");
@@ -125,6 +154,10 @@ public class Frame {
         }
         if (firstShot == "/") {
             throw new IllegalArgumentException("First shot can't be '/'");
+        }
+
+        if (firstShot == "X" && secondShot == null) {
+            return true;
         }
 
         isValidNumericalCombination(firstShot, secondShot);

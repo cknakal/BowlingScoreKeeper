@@ -9,13 +9,14 @@ public class LastFrame extends Frame{
     }
 
     public String getThirdShot() {
-        if (strike) {
-            return "X";
-        } else if (spare) {
-            return "/";
-        } else {
-            return this.thirdShot;
-        }
+//        if (strike) {
+//            return "X";
+//        } else if (spare) {
+//            return "/";
+//        } else {
+//            return this.thirdShot;
+//        }
+        return this.thirdShot;
     }
 
     public boolean setFrameShots(String firstShot, String secondShot, String thirdShot) {
@@ -29,7 +30,7 @@ public class LastFrame extends Frame{
         }
 
         try {
-            if (thirdShot == null) {
+            if (firstShot != "X" && secondShot != "X" && secondShot != "/" && thirdShot == null) {
                 isValidShotCombination(firstShot, secondShot);
             } else {
                 isValidShotCombination(firstShot, secondShot, thirdShot);
@@ -41,8 +42,14 @@ public class LastFrame extends Frame{
 
         this.firstShot = firstShot;
         this.secondShot = secondShot;
-        this.thirdShot = thirdShot;
-        setFrameScore(this.firstShot, this.secondShot, this.thirdShot);
+        if (thirdShot == null) {
+            setFrameScore(this.firstShot, this.secondShot, "0");
+
+        } else {
+            this.thirdShot = thirdShot;
+            setFrameScore(this.firstShot, this.secondShot, this.thirdShot);
+        }
+        checkStrikeOrSpare();
         return true;
     }
 
@@ -79,11 +86,27 @@ public class LastFrame extends Frame{
         if (firstShot == "X") {
             if (secondShot == "/") {
                 throw new IllegalArgumentException("If first shot is 'X', second shot can't be '/'.");
+            } else if (thirdShot == null) {
+                throw new IllegalArgumentException("If first shot is 'X', third shot can't be null.");
             } else if (secondShot != "X") {
                 isValidNumericalCombination(secondShot, thirdShot);
             }
         }
+        if (secondShot == "/") {
+            if (thirdShot == null) {
+                throw new IllegalArgumentException("If first shot is '/', third shot can't be null.");
+            }
+        }
 
         return true;
+    }
+
+    private void checkStrikeOrSpare() {
+        if (this.firstShot == "X" || this.secondShot == "X" || this.thirdShot == "X") {
+            this.strike = true;
+        }
+        if (this.secondShot == "/" || this.thirdShot == "/") {
+            this.spare = true;
+        }
     }
 }

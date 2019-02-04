@@ -14,6 +14,27 @@ public class LastFrameTest {
     }
 
     @Test
+    public void testSettingTwoFrameShots() {
+        String firstShot = "4";
+        String secondShot = "3";
+        lastFrame.setFrameShots(firstShot, secondShot);
+        assertEquals(firstShot, lastFrame.getFirstShot());
+        assertEquals(secondShot, lastFrame.getSecondShot());
+        assertEquals(null, lastFrame.getThirdShot());
+    }
+
+    @Test
+    public void testSettingThreeFrameShots() {
+        String firstShot = "X";
+        String secondShot = "5";
+        String thirdShot = "4";
+        lastFrame.setFrameShots(firstShot, secondShot, thirdShot);
+        assertEquals(firstShot, lastFrame.getFirstShot());
+        assertEquals(secondShot, lastFrame.getSecondShot());
+        assertEquals(thirdShot, lastFrame.getThirdShot());
+    }
+
+    @Test
     public void testMinLastFrameScore() {
         int minScore = 0;
         lastFrame.setFrameShots("0", "0");
@@ -38,6 +59,7 @@ public class LastFrameTest {
     public void testValidThreeShotLastFrameScore() {
         int score = 19;
         lastFrame.setFrameShots("X", "5", "4");
+        assertEquals(score, lastFrame.getFrameScore());
     }
 
     @Test
@@ -48,6 +70,7 @@ public class LastFrameTest {
         assertFalse(lastFrame.setFrameShots("X", "9"));
         assertFalse(lastFrame.setFrameShots("/", "9"));
         assertFalse(lastFrame.setFrameShots(null, "9"));
+        assertFalse(lastFrame.setFrameShots("9", null));
 
     }
 
