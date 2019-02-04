@@ -9,13 +9,6 @@ public class LastFrame extends Frame{
     }
 
     public String getThirdShot() {
-//        if (strike) {
-//            return "X";
-//        } else if (spare) {
-//            return "/";
-//        } else {
-//            return this.thirdShot;
-//        }
         return this.thirdShot;
     }
 
@@ -30,7 +23,7 @@ public class LastFrame extends Frame{
         }
 
         try {
-            if (firstShot != "X" && secondShot != "X" && secondShot != "/" && thirdShot == null) {
+            if (!firstShot.equals("X") && !secondShot.equals("X") && !secondShot.equals("/") && thirdShot == null) {
                 isValidShotCombination(firstShot, secondShot);
             } else {
                 isValidShotCombination(firstShot, secondShot, thirdShot);
@@ -57,7 +50,7 @@ public class LastFrame extends Frame{
         int first = setIntValue(firstShot);
         int second;
         int third;
-        if (secondShot == "/" || thirdShot == "/") {
+        if (secondShot.equals("/") || thirdShot.equals("/")) {
             // total will equal 10, so set one variable to 10 and the other to 0
             second = 10;
             third = 0;
@@ -69,7 +62,7 @@ public class LastFrame extends Frame{
     }
 
     private int setIntValue(String shot) {
-        if (shot == "X") {
+        if (shot.equals("X")) {
             return 10;
         } else {
             return Integer.parseInt(shot);
@@ -77,22 +70,22 @@ public class LastFrame extends Frame{
     }
 
     private boolean isValidShotCombination(String firstShot, String secondShot, String thirdShot) throws IllegalArgumentException {
-        if (firstShot != "X" && secondShot != "/" && thirdShot != null) {
+        if (!firstShot.equals("X") && !secondShot.equals("/") && thirdShot != null) {
             throw new IllegalArgumentException("Can't have a third shot if you haven't scored a spare or strike.");
         }
-        if (firstShot == "/") {
+        if (firstShot.equals("/")) {
             throw new IllegalArgumentException("First shot can't be '/'");
         }
-        if (firstShot == "X") {
-            if (secondShot == "/") {
+        if (firstShot.equals("X")) {
+            if (secondShot.equals("/")) {
                 throw new IllegalArgumentException("If first shot is 'X', second shot can't be '/'.");
             } else if (thirdShot == null) {
                 throw new IllegalArgumentException("If first shot is 'X', third shot can't be null.");
-            } else if (secondShot != "X") {
+            } else if (!secondShot.equals("X")) {
                 isValidNumericalCombination(secondShot, thirdShot);
             }
         }
-        if (secondShot == "/") {
+        if (secondShot.equals("/")) {
             if (thirdShot == null) {
                 throw new IllegalArgumentException("If first shot is '/', third shot can't be null.");
             }
@@ -102,10 +95,10 @@ public class LastFrame extends Frame{
     }
 
     private void checkStrikeOrSpare() {
-        if (this.firstShot == "X" || this.secondShot == "X" || this.thirdShot == "X") {
+        if (this.firstShot.equals("X") || this.secondShot.equals("X") || this.thirdShot.equals("X")) {
             this.strike = true;
         }
-        if (this.secondShot == "/" || this.thirdShot == "/") {
+        if (this.secondShot.equals("/") || this.thirdShot.equals("/")) {
             this.spare = true;
         }
     }

@@ -30,6 +30,11 @@ public class Player {
         return this.frames[frame - 1];
     }
 
+    public int getCurrentScore() {
+        calcCurrentScore();
+        return this.currentScore;
+    }
+
     public boolean populateFrame(int frame, String firstShot, String secondShot) {
         if (frame == 10) {
             if(!populateFrame(frame, firstShot, secondShot, null)) {
@@ -137,6 +142,15 @@ public class Player {
     public void updateSpareFrame(int frame, String firstShot) {
         Frame spareFrame = getFrame(frame);
         spareFrame.setSpareFrameScore(firstShot);
+    }
+
+    private void calcCurrentScore() {
+        this.currentScore = 0;
+        for (Frame frame : frames) {
+            if (frame.isFrameScoreCalculated()) {
+                this.currentScore += frame.getFrameScore();
+            }
+        }
     }
 
 }
