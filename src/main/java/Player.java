@@ -120,8 +120,9 @@ public class Player {
                 }
             }
         }
-        for (int i : strikeFramesToRemove) {
-            this.strikeFrames.remove(i);
+        while (!strikeFramesToRemove.isEmpty()) {
+            int frame = strikeFramesToRemove.pop();
+            this.strikeFrames.remove(frame);
         }
     }
 
@@ -135,6 +136,7 @@ public class Player {
         for (int i = 0; i < spareFrames.size(); i++) {
             if (spareFrames.get(i).getFrame() == currentFrameNumber - 1) {
                 updateSpareFrame(spareFrames.get(i).getFrame(), currentFrame.getFirstShot());
+                spareFrames.remove(i);
             }
         }
     }

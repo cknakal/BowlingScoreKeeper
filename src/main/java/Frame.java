@@ -7,7 +7,7 @@ public class Frame {
     protected boolean strike;
     protected boolean spare;
     protected int frameScore;
-    private boolean frameScoreCalculated;
+    protected boolean frameScoreCalculated;
 
     public Frame(int frame) {
         this.frame = frame;
@@ -112,16 +112,16 @@ public class Frame {
         return frameScore;
     }
 
-    public String toString() {
-        String first = getFirstShot() == null ? " " : getFirstShot();
-        String second = getSecondShot() == null ? " " : getSecondShot();
-        String total = isFrameScoreCalculated() == false ? " " : Integer.toString(getFrameScore());
-        return String.format("----%d----", getFrame()) +
-               "---------" +
-               String.format("| %d | %d |", first, second) +
-               String.format("|   %d   |", total) +
-               "---------";
-    }
+//    public String toString() {
+//        String first = getFirstShot() == null ? " " : getFirstShot();
+//        String second = getSecondShot() == null ? " " : getSecondShot();
+//        String total = isFrameScoreCalculated() == false ? " " : Integer.toString(getFrameScore());
+//        return String.format("----%d----", getFrame()) +
+//               "---------" +
+//               String.format("| %d | %d |", first, second) +
+//               String.format("|   %d   |", total) +
+//               "---------";
+//    }
 
     protected boolean isValidShot(String shot) throws Exception {
         if (shot == null) {
@@ -148,6 +148,12 @@ public class Frame {
         if (firstShot.equals("X") && secondShot != null) {
             throw new IllegalArgumentException("Second shot must be null when first is 'X'.");
         }
+
+        // Return if first if "X" and second is null to avoid exception
+        if (firstShot.equals("X") && secondShot == null) {
+            return true;
+        }
+
         if (secondShot.equals("X")) {
             throw new IllegalArgumentException("Second shot can't be 'X'.");
         }

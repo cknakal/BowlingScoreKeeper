@@ -48,6 +48,8 @@ public class Game {
                     if ((shots.length > 2 && frame != 10) || (shots.length > 3 && frame == 10)) {
                         System.out.println("You entered too many shots. Please try again.");
                         continue;
+                    } else if (frame == 10 && shots.length < 2) {
+                        System.out.println("You entered too few shots for the last shot. Please try again.");
                     } else {
                         String firstShot = shots[0];
                         String secondShot = null;
@@ -78,7 +80,6 @@ public class Game {
                                 continue;
                             }
                         }
-                        player.populateFrame(frame, firstShot, secondShot);
                         break;
                     }
                 }
@@ -89,6 +90,15 @@ public class Game {
     }
 
     public void endGame() {
+        Player winner = null;
+        System.out.println("\nThe game is over!");
+        for (Player player : players) {
+            System.out.println("Final score for " + player.getName() + " is: " + player.getCurrentScore());
+            if (winner == null || winner.getCurrentScore() < player.getCurrentScore()) {
+                winner = player;
+            }
+        }
+        System.out.println("\nThe winner of the game is " + winner.getName() + " with a score of " + winner.getCurrentScore() + ".");
         exit(0);
     }
 

@@ -16,6 +16,15 @@ public class FrameTest {
     }
 
     @Test
+    public void testStrikeFrame() {
+        String firstShot = "X";
+        String secondShot = null;
+        frame.setFrameShots(firstShot, secondShot);
+        assertEquals(firstShot, frame.getFirstShot());
+        assertEquals(secondShot, frame.getSecondShot());
+    }
+
+    @Test
     public void testMinFrameScore() {
         int minScore = 0;
         frame.setFrameShots("0", "0");

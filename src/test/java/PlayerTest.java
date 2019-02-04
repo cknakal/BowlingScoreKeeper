@@ -105,5 +105,22 @@ public class PlayerTest {
         assertEquals(tenthFrameScore, frame10.getFrameScore());
     }
 
+    @Test
+    public void testFirstFrameStrike() {
+        String firstShot = "X";
+        String secondShot = "3";
+        String thirdShot = "4";
+        int firstFrame = 1;
+        int secondFrame = 2;
+        int firstFrameScore = 17;
+        int secondFrameScore = 7;
+        player.populateFrame(firstFrame, firstShot, null);
+        player.populateFrame(secondFrame, secondShot, thirdShot);
+        Frame frame1 = player.getFrame(firstFrame);
+        Frame frame2 = player.getFrame(secondFrame);
+        assertEquals(firstFrameScore, frame1.getFrameScore());
+        assertEquals(secondFrameScore, frame2.getFrameScore());
+    }
+
 
 }

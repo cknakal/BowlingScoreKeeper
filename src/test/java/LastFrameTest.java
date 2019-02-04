@@ -24,14 +24,32 @@ public class LastFrameTest {
     }
 
     @Test
-    public void testSettingThreeFrameShots() {
-        String firstShot = "X";
-        String secondShot = "5";
-        String thirdShot = "4";
+    public void testSpareThreeFrameShots() {
+//        String firstShot = "X";
+//        String secondShot = "5";
+//        String thirdShot = "4";
+        String firstShot = "3";
+        String secondShot = "/";
+        String thirdShot = "5";
+        int frameScore = 15;
         lastFrame.setFrameShots(firstShot, secondShot, thirdShot);
         assertEquals(firstShot, lastFrame.getFirstShot());
         assertEquals(secondShot, lastFrame.getSecondShot());
         assertEquals(thirdShot, lastFrame.getThirdShot());
+        assertEquals(frameScore, lastFrame.getFrameScore());
+    }
+
+    @Test
+    public void testStrikeThreeFrameShots() {
+        String firstShot = "X";
+        String secondShot = "5";
+        String thirdShot = "4";
+        int frameScore = 19;
+        lastFrame.setFrameShots(firstShot, secondShot, thirdShot);
+        assertEquals(firstShot, lastFrame.getFirstShot());
+        assertEquals(secondShot, lastFrame.getSecondShot());
+        assertEquals(thirdShot, lastFrame.getThirdShot());
+        assertEquals(frameScore, lastFrame.getFrameScore());
     }
 
     @Test

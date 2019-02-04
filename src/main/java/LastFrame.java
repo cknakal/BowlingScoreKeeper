@@ -50,15 +50,18 @@ public class LastFrame extends Frame{
         int first = setIntValue(firstShot);
         int second;
         int third;
-        if (secondShot.equals("/") || thirdShot.equals("/")) {
-            // total will equal 10, so set one variable to 10 and the other to 0
-            second = 10;
-            third = 0;
+        if (secondShot.equals("/")) {
+            second = 10 - first;
+            third = setIntValue(thirdShot);
+        } else if (thirdShot.equals("/")) {
+            second = setIntValue(secondShot);
+            third = 10 - second;
         } else {
             second = setIntValue(secondShot);
             third = setIntValue(thirdShot);
         }
         this.frameScore = first + second + third;
+        this.frameScoreCalculated = true;
     }
 
     private int setIntValue(String shot) {
@@ -101,5 +104,9 @@ public class LastFrame extends Frame{
         if (this.secondShot.equals("/") || this.thirdShot.equals("/")) {
             this.spare = true;
         }
+    }
+
+    public int getFrameScore() {
+        return this.frameScore;
     }
 }
